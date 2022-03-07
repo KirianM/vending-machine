@@ -1,4 +1,4 @@
 /.idea
 /vendor/
 /.phpunit.result.cache
-/.machine_state.yaml
+/machine_state.yaml

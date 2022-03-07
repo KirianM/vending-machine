@@ -1,9 +1,8 @@
 #!/bin/bash
 
-docker exec -it vendor-machine php index.php "$@"
-# docker run -it --rm                         \
-#     --name my-running-script                \
-#     --network vendor-machine_net            \
-#     -v "$PWD":/usr/src                      \
-#     -w /usr/src                             \
-#     vendor-machine.php-cli php index.php "$@"
+docker run -it --rm                         \
+    --name my-running-script                \
+    --network vendor-machine_net            \
+    -v "$PWD":/usr/src                      \
+    -w /usr/src                             \
+    vendor-machine.php-cli php index.php "$@"
