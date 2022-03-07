@@ -36,6 +36,13 @@ final class YamlMachineRepository implements MachineRepository
         $this->persist();
     }
 
+    public function emptyBalance(): void
+    {
+        $this->machineState[self::BALANCE] = 0;
+
+        $this->persist();
+    }
+
     private function load(): void
     {
         if (!$this->filesystem->exists($this->getFilepath())) {

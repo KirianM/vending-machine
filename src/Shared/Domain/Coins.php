@@ -20,10 +20,42 @@ final class Coins extends Collection
         }, $coins));
     }
 
+    public function toArray(): array
+    {
+        return array_map(function ($coin) {
+            return $coin->value();
+        }, $this->items());
+    }
+
     public function total(): float
     {
         return array_sum(array_map(function ($coin) {
             return $coin->value();
         }, $this->items()));
+    }
+
+    public static function fromTotal(float $total): Coins
+    {
+        $allowedAmounts = Coin::allowedAmounts();
+        arsort($allowedAmounts, SORT_NUMERIC);
+
+        $remainingAmount = $total;
+
+        $coins = [];
+
+        foreach ($allowedAmounts as $value) {
+            if ($remainingAmount < $value) {
+                continue;
+            }
+
+            $totalValidCoins = intval($remainingAmount / $value);
+
+            for ($i = 0 ; $i < $totalValidCoins ; $i++) {
+                $coins[] = new Coin($value);
+                $remainingAmount -= $value;
+            }
+        }
+
+        return new self($coins);
     }
 }

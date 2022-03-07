@@ -11,4 +11,6 @@ interface MachineRepository
     public function currentBalance(): float;
 
     public function insertCoins(Coins $coins): void;
+
+    public function emptyBalance(): void;
 }

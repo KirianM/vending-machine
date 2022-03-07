@@ -15,12 +15,17 @@ final class Coin extends FloatValueObject
     {
         $this->ensureIsValidCoin($value);
     }
+
+    public static function allowedAmounts(): array
+    {
+        return self::ALLOWED_AMOUNTS;
+    }
     
     private function ensureIsValidCoin(float $value): void
     {
         $valid = false;
 
-        foreach (self::ALLOWED_AMOUNTS as $allowedAmount) {
+        foreach (self::allowedAmounts() as $allowedAmount) {
             if (abs($allowedAmount - $value) < self::EPSILON) {
                 $valid = true;
                 break;
