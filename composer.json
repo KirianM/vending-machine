@@ -17,8 +17,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorMachine\\App\\Tests\\": "tests/app",
-            "VendorMachine\\Tests\\": "tests/machine"
+            "VendorMachine\\App\\Tests\\": "tests/App",
+            "VendorMachine\\Tests\\": "tests/VendorMachine"
         }
     }
 }

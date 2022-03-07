@@ -8,16 +8,15 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use VendorMachine\Machine\Application\MachineCoinsInserter;
 
-class MachinePowerOnCommand extends Command
+class MachineInsertCoinsCommand extends Command
 {
-    protected static $defaultName = 'machine:power:on';
+    protected static $defaultName = 'machine:coins:insert';
 
-    private $order;
-
-    public function __construct()
+    public function __construct(private MachineCoinsInserter $inserter)
     {
-        parent::__construct(MachinePowerOnCommand::$defaultName);
+        parent::__construct(self::$defaultName);
     }
 
 
@@ -27,14 +26,6 @@ class MachinePowerOnCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        try {
-            $output->writeln('Machine has been powered ON');
-            
-            return Command::SUCCESS;
-        } catch (DomainException $e) {
-            $output->writeln($e->getMessage());
-        }
-
-        return Command::FAILURE;
+        return Command::SUCCESS;
     }
 }

@@ -3,8 +3,8 @@ services:
         autowire: true
         autoconfigure: true
 
-    # VendorMachine\Tests\:
-    #     resource: '../tests/machine/*'
+    VendorMachine\Tests\:
+        resource: '../tests/VendorMachine/*'
 
     VendorMachine\App\Tests\:
-        resource: '../tests/app/*'
+        resource: '../tests/App/*'

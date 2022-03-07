@@ -19,8 +19,8 @@
         <testsuite name="acceptance">
             <directory>./tests/App</directory>
         </testsuite>
-        <!-- <testsuite name="unit">
-            <directory>./tests/machine</directory>
-        </testsuite> -->
+        <testsuite name="unit">
+            <directory>./tests/VendorMachine/Machine/Application</directory>
+        </testsuite>
     </testsuites>
 </phpunit>
