@@ -9,6 +9,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use VendorMachine\Machine\Application\MachineCoinsInserter;
+use VendorMachine\Shared\Domain\Coin;
+use VendorMachine\Shared\Domain\Coins;
 
 class MachineInsertCoinsCommand extends Command
 {
@@ -22,10 +24,17 @@ class MachineInsertCoinsCommand extends Command
 
     protected function configure(): void
     {
+        $this->addArgument(
+            'coins',
+            InputArgument::IS_ARRAY,
+            'Space separated list of coins to insert'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->inserter->__invoke(Coins::fromArray($input->getArgument('coins')));
+        
         return Command::SUCCESS;
     }
 }

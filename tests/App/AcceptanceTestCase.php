@@ -16,8 +16,8 @@ abstract class AcceptanceTestCase extends TestCase
 
         $container = new ContainerBuilder();
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
-        $loader->load('../../config/services.yaml');
-        $loader->load('../../config/services_test.yaml');
+        $loader->load('../../app/config/services.yaml');
+        $loader->load('../../app/config/services_test.yaml');
 
         $container->compile();
         $this->application = $container->get(Application::class);

@@ -5,11 +5,18 @@ declare(strict_types=1);
 namespace VendorMachine\Machine\Application;
 
 use InvalidArgumentException;
+use VendorMachine\Machine\Domain\MachineRepository;
+use VendorMachine\Shared\Domain\Coins;
 
 final class MachineCoinsInserter
 {
-    public function __invoke()
+    public function __construct(private MachineRepository $repository)
     {
-        throw new \Exception('test');
+        
+    }
+
+    public function __invoke(Coins $coins)
+    {
+        $this->repository->updateBalance($coins);
     }
 }
