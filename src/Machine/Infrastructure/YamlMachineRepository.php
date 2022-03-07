@@ -12,6 +12,7 @@ use VendorMachine\Shared\Domain\Coins;
 final class YamlMachineRepository implements MachineRepository
 {
     private const FILENAME = 'machine_state.yaml';
+    private const BALANCE = 'balance';
 
     private Filesystem $filesystem;
     private array $machineState;
@@ -23,14 +24,14 @@ final class YamlMachineRepository implements MachineRepository
         $this->load();
     }
 
-    public function getBalance(): float
+    public function currentBalance(): float
     {
-        return $this->machineState['balance'];
+        return $this->machineState[self::BALANCE];
     }
     
-    public function updateBalance(Coins $coins): void
+    public function insertCoins(Coins $coins): void
     {
-        $this->machineState['balance'] = $this->getBalance() + $coins->total();
+        $this->machineState[self::BALANCE] = $this->currentBalance() + $coins->total();
 
         $this->persist();
     }
@@ -39,7 +40,7 @@ final class YamlMachineRepository implements MachineRepository
     {
         if (!$this->filesystem->exists($this->getFilepath())) {
             $this->machineState = [
-                'balance' => 0,
+                self::BALANCE => 0,
             ];
             
             $this->persist();

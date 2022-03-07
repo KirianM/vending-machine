@@ -29,7 +29,7 @@ class MachineCoinsInserterTest extends UnitTestCase
         ]);
 
         $this->repository()
-            ->shouldReceive('updateBalance')
+            ->shouldReceive('insertCoins')
             ->with($coins)
             ->once()
             ->andReturnNull();
