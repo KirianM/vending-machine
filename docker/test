@@ -1,0 +1,9 @@
+#!/bin/bash
+
+docker run -it --rm                                 \
+    --name my-running-script                        \
+    --network vendor-machine_net                    \
+    -v "$PWD":/usr/src                              \
+    -e XDEBUG_MODE=coverage                         \
+    -w /usr/src                                     \
+    vendor-machine.php-cli php vendor/bin/phpunit $@

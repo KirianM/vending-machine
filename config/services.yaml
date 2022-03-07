@@ -1,0 +1,21 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    _instanceof:
+        Symfony\Component\Console\Command\Command:
+            tags: [ 'console.command' ]
+    
+    VendorMachine\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Tests,Kernel.php}'
+
+    VendorMachine\App\:
+        resource: '../app/*'
+        exclude: '../app/{DependencyInjection,Entity,Tests,Kernel.php}'
+
+    VendorMachine\App\Application:
+        public: true
+        arguments:
+          - !tagged_iterator console.command
