@@ -8,7 +8,7 @@ use VendorMachine\Shared\Domain\Coins;
 
 interface MachineRepository
 {
-    public function currentBalance(): float;
+    public function currentBalance(): Coins;
 
     public function insertCoins(Coins $coins): void;
 

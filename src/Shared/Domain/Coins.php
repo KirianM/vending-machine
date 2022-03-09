@@ -33,29 +33,4 @@ final class Coins extends Collection
             return $coin->value();
         }, $this->items()));
     }
-
-    public static function fromTotal(float $total): Coins
-    {
-        $allowedAmounts = Coin::allowedAmounts();
-        arsort($allowedAmounts, SORT_NUMERIC);
-
-        $remainingAmount = $total;
-
-        $coins = [];
-
-        foreach ($allowedAmounts as $value) {
-            if ($remainingAmount < $value) {
-                continue;
-            }
-
-            $totalValidCoins = intval($remainingAmount / $value);
-
-            for ($i = 0 ; $i < $totalValidCoins ; $i++) {
-                $coins[] = new Coin($value);
-                $remainingAmount -= $value;
-            }
-        }
-
-        return new self($coins);
-    }
 }

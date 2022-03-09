@@ -24,21 +24,21 @@ final class YamlMachineRepository implements MachineRepository
         $this->load();
     }
 
-    public function currentBalance(): float
+    public function currentBalance(): Coins
     {
-        return $this->machineState[self::BALANCE];
+        return Coins::fromArray($this->machineState[self::BALANCE]);
     }
     
     public function insertCoins(Coins $coins): void
     {
-        $this->machineState[self::BALANCE] = $this->currentBalance() + $coins->total();
+        $this->machineState[self::BALANCE] = array_merge($this->currentBalance()->toArray(), $coins->toArray());
 
         $this->persist();
     }
 
     public function emptyBalance(): void
     {
-        $this->machineState[self::BALANCE] = 0;
+        $this->machineState[self::BALANCE] = [];
 
         $this->persist();
     }
@@ -47,7 +47,7 @@ final class YamlMachineRepository implements MachineRepository
     {
         if (!$this->filesystem->exists($this->getFilepath())) {
             $this->machineState = [
-                self::BALANCE => 0,
+                self::BALANCE => [],
             ];
             
             $this->persist();

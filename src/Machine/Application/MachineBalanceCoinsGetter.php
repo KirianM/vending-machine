@@ -15,9 +15,7 @@ final class MachineBalanceCoinsGetter
 
     public function __invoke(): Coins
     {
-        $currentBalance = $this->repository->currentBalance();
-
-        $coins = Coins::fromTotal($currentBalance);
+        $coins = $this->repository->currentBalance();
 
         return $coins;
     }
