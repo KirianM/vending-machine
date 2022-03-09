@@ -4,24 +4,27 @@ namespace VendorMachine\Tests\Machine\Application;
 
 use Symfony\Component\Console\Tester\CommandTester;
 use VendorMachine\Machine\Application\MachineCoinsInserter;
-use VendorMachine\Machine\Domain\MachineRepository;
+use VendorMachine\Machine\Domain\MachineBalanceRepository;
 use VendorMachine\Shared\Domain\Coin;
 use VendorMachine\Tests\UnitTestCase;
 use Mockery\MockInterface;
+use VendorMachine\Machine\Domain\Balance;
+use VendorMachine\Machine\Domain\MachineBalanceGetter;
 use VendorMachine\Shared\Domain\Coins;
 use VendorMachine\Shared\Domain\DomainError;
 use VendorMachine\Shared\Domain\InvalidCoin;
 
 class MachineCoinsInserterTest extends UnitTestCase
 {
-    private MachineRepository|MockInterface|null $repository;
+    private MachineMachineBalanceRepositoryRepository|MockInterface|null $repository;
     private MachineCoinsInserter $inserter;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->inserter = new MachineCoinsInserter($this->repository());
+        $coinsGetter = new MachineBalanceGetter($this->repository());
+        $this->inserter = new MachineCoinsInserter($this->repository(), $coinsGetter);
     }
     /** @test */
     public function it_should_not_throw_exceptions(): void
@@ -30,11 +33,10 @@ class MachineCoinsInserterTest extends UnitTestCase
             new Coin(0.05)
         ]);
 
-        $this->repository()
-            ->shouldReceive('insertCoins')
-            ->with($coins)
-            ->once()
-            ->andReturnNull();
+        $balance = new Balance($coins);
+
+        $this->shouldGet(new Balance(new Coins([])));
+        $this->shouldSave($balance);
 
         $this->inserter->__invoke($coins);
     }
@@ -49,8 +51,25 @@ class MachineCoinsInserterTest extends UnitTestCase
         ]);
     }
 
-    public function repository(): MachineRepository|MockInterface
+    protected function shouldGet(Balance $balance): void
     {
-        return $this->repository = $this->repository ?? $this->mock(MachineRepository::class);
+        $this->repository()
+            ->shouldReceive('get')
+            ->once()
+            ->andReturn($balance);
+    }
+
+    protected function shouldSave(Balance $balance): void
+    {
+        $this->repository()
+            ->shouldReceive('save')
+            ->with($balance)
+            ->once()
+            ->andReturnNull();
+    }
+
+    public function repository(): MachineBalanceRepository|MockInterface
+    {
+        return $this->repository = $this->repository ?? $this->mock(MachineBalanceRepository::class);
     }
 }

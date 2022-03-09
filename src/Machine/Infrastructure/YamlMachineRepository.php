@@ -6,63 +6,48 @@ namespace VendorMachine\Machine\Infrastructure;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
-use VendorMachine\Machine\Domain\MachineRepository;
+use VendorMachine\Machine\Domain\Balance;
+use VendorMachine\Machine\Domain\BalanceLeft;
+use VendorMachine\Machine\Domain\Product;
+use VendorMachine\Machine\Domain\ItemName;
 use VendorMachine\Shared\Domain\Coins;
 
-final class YamlMachineRepository implements MachineRepository
+abstract class YamlMachineRepository
 {
-    private const FILENAME = 'machine_state.yaml';
-    private const BALANCE = 'balance';
+    protected $entityState;
 
     private Filesystem $filesystem;
-    private array $machineState;
 
     public function __construct()
     {
         $this->filesystem = new Filesystem();
-
-        $this->load();
+        $this->init();
     }
 
-    public function currentBalance(): Coins
-    {
-        return Coins::fromArray($this->machineState[self::BALANCE]);
-    }
-    
-    public function insertCoins(Coins $coins): void
-    {
-        $this->machineState[self::BALANCE] = array_merge($this->currentBalance()->toArray(), $coins->toArray());
+    abstract protected function entityFilepath(): string;
 
-        $this->persist();
-    }
+    abstract protected function dummyEntity(): mixed;
 
-    public function emptyBalance(): void
+    private function init(): void
     {
-        $this->machineState[self::BALANCE] = [];
+        $this->filesystem->mkdir(dirname($this->entityFilepath()));
 
-        $this->persist();
+        if (!$this->filesystem->exists($this->entityFilepath())) {
+            $this->entityState = $this->dummyEntity();
+            
+            $this->persist();
+        } else {
+            $this->load();
+        }
     }
 
     private function load(): void
     {
-        if (!$this->filesystem->exists($this->getFilepath())) {
-            $this->machineState = [
-                self::BALANCE => [],
-            ];
-            
-            $this->persist();
-        }
-
-        $this->machineState = Yaml::parseFile($this->getFilepath());
+        $this->entityState = Yaml::parseFile($this->entityFilepath());
     }
 
-    private function persist(): void
+    protected function persist(): void
     {
-        $this->filesystem->dumpFile($this->getFilepath(), Yaml::dump($this->machineState));
-    }
-
-    private function getFilepath(): string
-    {
-        return self::FILENAME;
+        $this->filesystem->dumpFile($this->entityFilepath(), Yaml::dump($this->entityState));
     }
 }

@@ -8,32 +8,32 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use VendorMachine\Machine\Application\MachineCoinsInserter;
-use VendorMachine\Shared\Domain\Coin;
-use VendorMachine\Shared\Domain\Coins;
+use VendorMachine\Machine\Application\MachineProductBuyer;
+use VendorMachine\Machine\Domain\ItemName;
 
-class MachineInsertCoinsCommand extends Command
+class MachineBuyProductCommand extends Command
 {
-    protected static $defaultName = 'machine:coins:insert';
+    protected static $defaultName = 'machine:products:buy';
 
-    public function __construct(private MachineCoinsInserter $inserter)
-    {
+    public function __construct(
+        private MachineProductBuyer $buyer,
+    ) {
         parent::__construct(self::$defaultName);
     }
 
     protected function configure(): void
     {
         $this->addArgument(
-            'coins',
-            InputArgument::IS_ARRAY,
-            'Space separated list of coins to insert'
+            'name',
+            InputArgument::REQUIRED,
+            'Product name you want to buy'
         );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->inserter->__invoke(Coins::fromArray($input->getArgument('coins')));
-        
+        $this->buyer->__invoke(new ItemName($input->getArgument('name')));
+
         return Command::SUCCESS;
     }
 }
