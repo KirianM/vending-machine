@@ -12,7 +12,7 @@ use VendorMachine\Shared\Domain\Coins;
 
 class MachineServiceSetChangeCommand extends Command
 {
-    protected static $defaultName = 'machine:service:set-change';
+    protected static $defaultName = 'service:change:set';
 
     public function __construct(private MachineChangeSetter $change)
     {

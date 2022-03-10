@@ -10,7 +10,7 @@ class MachineServiceSetChangeCommandTest extends AcceptanceTestCase
     /** @test */
     public function it_should_return_command_success(): void
     {
-        $command = $this->application->find('machine:service:set-change');
+        $command = $this->application->find('service:change:set');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command'   => $command->getName(),

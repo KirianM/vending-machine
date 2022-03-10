@@ -13,7 +13,7 @@ use VendorMachine\Machine\Products\Domain\ProductStock;
 
 class MachineServiceSetProductStockCommand extends Command
 {
-    protected static $defaultName = 'machine:service:set-product-stock';
+    protected static $defaultName = 'service:products:set-stock';
 
     public function __construct(private MachineProductStockSetter $stock)
     {

@@ -116,7 +116,7 @@ class MachineBuyProductCommandTest extends AcceptanceTestCase
 
     private function setProductStock(string $product, int $stock): void
     {
-        $command = $this->application->find('machine:service:set-product-stock');
+        $command = $this->application->find('service:products:set-stock');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command'   => $command->getName(),
