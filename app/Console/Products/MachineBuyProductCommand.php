@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorMachine\App\Console;
+namespace VendorMachine\App\Console\Products;
 
 use DomainException;
 use Symfony\Component\Console\Command\Command;
@@ -8,8 +8,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use VendorMachine\Machine\Product\Application\MachineProductBuyer;
-use VendorMachine\Machine\Product\Domain\ProductName;
+use VendorMachine\Machine\Products\Application\MachineProductBuyer;
+use VendorMachine\Machine\Products\Domain\ProductName;
 
 class MachineBuyProductCommand extends Command
 {

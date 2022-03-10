@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace VendorMachine\Machine\Product\Infrastructure;
+namespace VendorMachine\Machine\Products\Infrastructure;
 
-use VendorMachine\Machine\Product\Domain\Product;
-use VendorMachine\Machine\Product\Domain\ProductName;
-use VendorMachine\Machine\Product\Domain\MachineProductsRepository;
+use VendorMachine\Machine\Products\Domain\Product;
+use VendorMachine\Machine\Products\Domain\ProductName;
+use VendorMachine\Machine\Products\Domain\MachineProductsRepository;
 use VendorMachine\Shared\Infrastructure\YamlMachineRepository;
 
 final class YamlMachineProductsRepository extends YamlMachineRepository implements MachineProductsRepository

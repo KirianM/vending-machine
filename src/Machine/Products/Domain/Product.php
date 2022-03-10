@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace VendorMachine\Machine\Product\Domain;
+namespace VendorMachine\Machine\Products\Domain;
 
 final class Product
 {

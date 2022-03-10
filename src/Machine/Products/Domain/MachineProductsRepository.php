@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace VendorMachine\Machine\Product\Domain;
+namespace VendorMachine\Machine\Products\Domain;
 
-use VendorMachine\Machine\Product\Domain\Product;
-use VendorMachine\Machine\Product\Domain\ProductName;
+use VendorMachine\Machine\Products\Domain\Product;
+use VendorMachine\Machine\Products\Domain\ProductName;
 use VendorMachine\Shared\Domain\Coins;
 
 interface MachineProductsRepository

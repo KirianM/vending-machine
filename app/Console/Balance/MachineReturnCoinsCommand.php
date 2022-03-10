@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorMachine\App\Console;
+namespace VendorMachine\App\Console\Balance;
 
 use DomainException;
 use Symfony\Component\Console\Command\Command;

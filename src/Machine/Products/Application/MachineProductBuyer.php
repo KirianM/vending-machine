@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace VendorMachine\Machine\Product\Application;
+namespace VendorMachine\Machine\Products\Application;
 
 use RuntimeException;
-use VendorMachine\Machine\Product\Domain\ProductName;
-use VendorMachine\Machine\Product\Domain\MachineProductsRepository;
+use VendorMachine\Machine\Products\Domain\ProductName;
+use VendorMachine\Machine\Products\Domain\MachineProductsRepository;
 use VendorMachine\Shared\Domain\Coins;
 
 final class MachineProductBuyer

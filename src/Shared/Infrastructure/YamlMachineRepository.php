@@ -8,8 +8,8 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 use VendorMachine\Machine\Balance\Domain\Balance;
 use VendorMachine\Machine\Domain\BalanceLeft;
-use VendorMachine\Machine\Product\Domain\Product;
-use VendorMachine\Machine\Product\Domain\ProductName;
+use VendorMachine\Machine\Products\Domain\Product;
+use VendorMachine\Machine\Products\Domain\ProductName;
 use VendorMachine\Shared\Domain\Coins;
 
 abstract class YamlMachineRepository
