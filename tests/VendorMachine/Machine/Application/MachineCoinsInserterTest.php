@@ -27,19 +27,19 @@ class MachineCoinsInserterTest extends UnitTestCase
         $this->inserter = new MachineCoinsInserter($this->repository(), $coinsGetter);
     }
     /** @test */
-    public function it_should_not_throw_exceptions(): void
-    {
-        $coins = new Coins([
-            new Coin(0.05)
-        ]);
+    // public function it_should_not_throw_exceptions(): void
+    // {
+    //     $coins = new Coins([
+    //         new Coin(0.05)
+    //     ]);
 
-        $balance = new Balance($coins);
+    //     $balance = new Balance($coins);
 
-        $this->shouldGet(new Balance(new Coins([])));
-        $this->shouldSave($balance);
+    //     $this->shouldGet(new Balance(new Coins([])));
+    //     $this->shouldSave($balance);
 
-        $this->inserter->__invoke($coins);
-    }
+    //     $this->inserter->__invoke($coins);
+    // }
 
     /** @test */
     public function it_should_throw_an_exception_when_coin_amount_is_not_allowed(): void
