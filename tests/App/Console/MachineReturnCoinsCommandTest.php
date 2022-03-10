@@ -4,12 +4,9 @@ namespace VendorMachine\App\Tests\Console;
 
 use VendorMachine\App\Tests\AcceptanceTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
-use VendorMachine\Machine\Application\MachineBalanceCoinsResetter;
 
 class MachineReturnCoinsCommandTest extends AcceptanceTestCase
 {
-    private MachineBalanceCoinsResetter $balanceReset;
-    
     /** @test */
     public function it_should_output_a_list_of_the_returned_coins(): void
     {

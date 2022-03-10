@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace VendorMachine\Machine\Application;
+namespace VendorMachine\Machine\Balance\Application;
 
-use VendorMachine\Machine\Domain\MachineBalanceGetter;
-use VendorMachine\Machine\Domain\MachineBalanceRepository;
+use VendorMachine\Machine\Balance\Domain\MachineBalanceGetter;
+use VendorMachine\Machine\Balance\Domain\MachineBalanceRepository;
 use VendorMachine\Shared\Domain\Coins;
 
 final class MachineCoinsInserter

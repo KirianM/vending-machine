@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace VendorMachine\Machine\Domain;
+namespace VendorMachine\Machine\Product\Domain;
 
 use VendorMachine\Shared\Domain\ValueObject\IntegerValueObject;
 
-final class ItemStock extends IntegerValueObject
+final class ProductStock extends IntegerValueObject
 {
 }

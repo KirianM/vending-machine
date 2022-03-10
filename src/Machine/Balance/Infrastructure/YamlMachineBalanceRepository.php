@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace VendorMachine\Machine\Infrastructure;
+namespace VendorMachine\Machine\Balance\Infrastructure;
 
-use VendorMachine\Machine\Domain\Balance;
+use VendorMachine\Machine\Balance\Domain\Balance;
 use VendorMachine\Machine\Domain\BalanceLeft;
-use VendorMachine\Machine\Domain\MachineBalanceRepository;
+use VendorMachine\Machine\Balance\Domain\MachineBalanceRepository;
 use VendorMachine\Shared\Domain\Coins;
+use VendorMachine\Shared\Infrastructure\YamlMachineRepository;
 
 final class YamlMachineBalanceRepository extends YamlMachineRepository implements MachineBalanceRepository
 {

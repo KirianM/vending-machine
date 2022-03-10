@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace VendorMachine\Machine\Infrastructure;
+namespace VendorMachine\Shared\Infrastructure;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
-use VendorMachine\Machine\Domain\Balance;
+use VendorMachine\Machine\Balance\Domain\Balance;
 use VendorMachine\Machine\Domain\BalanceLeft;
-use VendorMachine\Machine\Domain\Product;
-use VendorMachine\Machine\Domain\ItemName;
+use VendorMachine\Machine\Product\Domain\Product;
+use VendorMachine\Machine\Product\Domain\ProductName;
 use VendorMachine\Shared\Domain\Coins;
 
 abstract class YamlMachineRepository

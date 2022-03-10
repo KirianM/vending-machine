@@ -8,8 +8,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use VendorMachine\Machine\Application\MachineProductBuyer;
-use VendorMachine\Machine\Domain\ItemName;
+use VendorMachine\Machine\Product\Application\MachineProductBuyer;
+use VendorMachine\Machine\Product\Domain\ProductName;
 
 class MachineBuyProductCommand extends Command
 {
@@ -32,7 +32,9 @@ class MachineBuyProductCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->buyer->__invoke(new ItemName($input->getArgument('name')));
+        $this->buyer->__invoke(new ProductName($input->getArgument('name')));
+
+        $output->writeln($input->getArgument('name'));
 
         return Command::SUCCESS;
     }

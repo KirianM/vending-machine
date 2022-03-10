@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace VendorMachine\Machine\Domain;
+namespace VendorMachine\Machine\Balance\Domain;
 
-use VendorMachine\Machine\Domain\Balance;
+use VendorMachine\Machine\Balance\Domain\Balance;
 
 interface MachineBalanceRepository
 {

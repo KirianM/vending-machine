@@ -2,37 +2,37 @@
 
 declare(strict_types=1);
 
-namespace VendorMachine\Machine\Domain;
+namespace VendorMachine\Machine\Product\Domain;
 
 final class Product
 {
     public function __construct(
-        private ItemName $name,
-        private ItemPrice $price,
-        private ItemStock $stock
+        private ProductName $name,
+        private ProductPrice $price,
+        private ProductStock $stock
     ) {
     }
 
     public static function fromPrimitives(string $name, float $price, int $stock)
     {
         return new self(
-            new ItemName($name),
-            new ItemPrice($price),
-            new ItemStock($stock)
+            new ProductName($name),
+            new ProductPrice($price),
+            new ProductStock($stock)
         );
     }
 
-    public function name(): ItemName
+    public function name(): ProductName
     {
         return $this->name;
     }
 
-    public function price(): ItemPrice
+    public function price(): ProductPrice
     {
         return $this->price;
     }
 
-    public function stock(): ItemStock
+    public function stock(): ProductStock
     {
         return $this->stock;
     }
@@ -44,7 +44,7 @@ final class Product
 
     public function decreaseStock(): Product
     {
-        $stock = new ItemStock($this->stock()->value() - 1);
+        $stock = new ProductStock($this->stock()->value() - 1);
 
         return new self($this->name(), $this->price(), $stock);
     }

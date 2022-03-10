@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use VendorMachine\Machine\Application\MachineCoinsInserter;
+use VendorMachine\Machine\Balance\Application\MachineCoinsInserter;
 use VendorMachine\Shared\Domain\Coin;
 use VendorMachine\Shared\Domain\Coins;
 

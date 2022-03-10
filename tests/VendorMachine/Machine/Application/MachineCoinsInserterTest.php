@@ -3,13 +3,13 @@
 namespace VendorMachine\Tests\Machine\Application;
 
 use Symfony\Component\Console\Tester\CommandTester;
-use VendorMachine\Machine\Application\MachineCoinsInserter;
-use VendorMachine\Machine\Domain\MachineBalanceRepository;
+use VendorMachine\Machine\Balance\Application\MachineCoinsInserter;
+use VendorMachine\Machine\Balance\Domain\MachineBalanceRepository;
 use VendorMachine\Shared\Domain\Coin;
 use VendorMachine\Tests\UnitTestCase;
 use Mockery\MockInterface;
-use VendorMachine\Machine\Domain\Balance;
-use VendorMachine\Machine\Domain\MachineBalanceGetter;
+use VendorMachine\Machine\Balance\Domain\Balance;
+use VendorMachine\Machine\Balance\Domain\MachineBalanceGetter;
 use VendorMachine\Shared\Domain\Coins;
 use VendorMachine\Shared\Domain\DomainError;
 use VendorMachine\Shared\Domain\InvalidCoin;

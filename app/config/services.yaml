@@ -20,5 +20,5 @@ services:
         arguments:
           - !tagged_iterator console.command
 
-    VendorMachine\Machine\Domain\MachineBalanceRepository: '@VendorMachine\Machine\Infrastructure\YamlMachineBalanceRepository'
-    VendorMachine\Machine\Domain\MachineRepository: '@VendorMachine\Machine\Infrastructure\YamlMachineProductsRepository'
+    VendorMachine\Machine\Balance\Domain\MachineBalanceRepository: '@VendorMachine\Machine\Balance\Infrastructure\YamlMachineBalanceRepository'
+    VendorMachine\Machine\Product\Domain\MachineProductsRepository: '@VendorMachine\Machine\Product\Infrastructure\YamlMachineProductsRepository'

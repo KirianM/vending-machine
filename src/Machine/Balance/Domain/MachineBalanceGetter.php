@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace VendorMachine\Machine\Domain;
+namespace VendorMachine\Machine\Balance\Domain;
 
 final class MachineBalanceGetter
 {

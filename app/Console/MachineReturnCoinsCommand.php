@@ -8,9 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use VendorMachine\Machine\Application\MachineBalanceCoinsGetter;
-use VendorMachine\Machine\Application\MachineBalanceCoinsResetter;
-use VendorMachine\Machine\Application\MachineCoinsReturn;
+use VendorMachine\Machine\Balance\Application\MachineCoinsReturn;
 use VendorMachine\Shared\Domain\Coin;
 use VendorMachine\Shared\Domain\Coins;
 
