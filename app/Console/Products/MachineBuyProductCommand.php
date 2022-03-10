@@ -9,6 +9,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use VendorMachine\Machine\Products\Application\MachineProductBuyer;
+use VendorMachine\Machine\Products\Domain\NotEnoughMoney;
+use VendorMachine\Machine\Products\Domain\OutOfStock;
 use VendorMachine\Machine\Products\Domain\ProductName;
 
 class MachineBuyProductCommand extends Command
@@ -32,7 +34,13 @@ class MachineBuyProductCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->buyer->__invoke(new ProductName($input->getArgument('name')));
+        try {
+            $this->buyer->__invoke(new ProductName($input->getArgument('name')));
+        } catch (OutOfStock $e) {
+            $output->writeln(sprintf('Product <%s> is out of stock', $input->getArgument('name')));
+        } catch (NotEnoughMoney $e) {
+            $output->writeln(sprintf('Current balance is not enough to buy <%s>', $input->getArgument('name')));
+        }
 
         $output->writeln($input->getArgument('name'));
 

@@ -28,4 +28,9 @@ final class Balance
             Coins::fromArray(array_merge($this->coins()->toArray(), $coins->toArray()))
         );
     }
+
+    public function isEnough(float $quantity): bool
+    {
+        return ($this->coins()->total() - $quantity > 0);
+    }
 }
