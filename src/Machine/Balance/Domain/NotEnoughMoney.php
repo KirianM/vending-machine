@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace VendorMachine\Machine\Products\Domain;
+namespace VendorMachine\Machine\Balance\Domain;
 
 use VendorMachine\Shared\Domain\DomainError;
 

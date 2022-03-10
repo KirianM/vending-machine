@@ -69,6 +69,33 @@ class MachineBuyProductCommandTest extends AcceptanceTestCase
         $this->assertStringContainsString('Current balance is not enough to buy <Water>', $output);
     }
 
+    /** @test */
+    public function it_should_output_product_selected_and_change(): void
+    {
+        $this->setChange([
+            0.25,
+            0.1,
+            0.05,
+        ]);
+        $this->setProductStock('Water', 1);
+        $this->emptyBalance();
+        $this->insertCoins([
+            1,
+            0.05,
+        ]);
+
+        $commandTester = $this->getCommandTester();
+        $commandTester->execute([
+            'command'   => self::COMMAND_NAME,
+            'name'      => 'Water',
+        ]);
+
+        $commandTester->assertCommandIsSuccessful();
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('Water 0.25, 0.1, 0.05', $output);
+    }
+
     private function getEnoughCoinsToBuyWater(): array
     {
         return [
@@ -122,6 +149,16 @@ class MachineBuyProductCommandTest extends AcceptanceTestCase
             'command'   => $command->getName(),
             'product'   => $product,
             'stock'     => $stock,
+        ]);
+    }
+
+    private function setChange(array $coins): void
+    {
+        $command = $this->application->find('service:change:set');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([
+            'command'   => $command->getName(),
+            'coins'     => $coins,
         ]);
     }
 }
