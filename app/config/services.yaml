@@ -22,3 +22,4 @@ services:
 
     VendorMachine\Machine\Balance\Domain\MachineBalanceRepository: '@VendorMachine\Machine\Balance\Infrastructure\YamlMachineBalanceRepository'
     VendorMachine\Machine\Products\Domain\MachineProductsRepository: '@VendorMachine\Machine\Products\Infrastructure\YamlMachineProductsRepository'
+    VendorMachine\Machine\Change\Domain\MachineChangeRepository: '@VendorMachine\Machine\Change\Infrastructure\YamlMachineChangeRepository'
