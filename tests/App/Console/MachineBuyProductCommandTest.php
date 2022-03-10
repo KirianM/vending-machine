@@ -14,6 +14,7 @@ class MachineBuyProductCommandTest extends AcceptanceTestCase
     /** @test */
     public function it_should_output_the_name_of_the_product_selected(): void
     {
+        $this->setProductStock('Water', 1);
         $this->emptyBalance();
         $this->insertCoins($this->getEnoughCoinsToBuyWater());
 
@@ -33,6 +34,7 @@ class MachineBuyProductCommandTest extends AcceptanceTestCase
     /** @test */
     public function it_should_output_out_of_stock_when_product_is_out(): void
     {
+        $this->setProductStock('Water', 0);
         $this->emptyBalance();
         $this->insertCoins($this->getEnoughCoinsToBuyWater());
 
@@ -51,6 +53,7 @@ class MachineBuyProductCommandTest extends AcceptanceTestCase
     /** @test */
     public function it_should_output_not_enough_money(): void
     {
+        $this->setProductStock('Water', 1);
         $this->emptyBalance();
         $this->insertCoins($this->getNotEnoughCoinsToBuyWater());
 
@@ -108,6 +111,17 @@ class MachineBuyProductCommandTest extends AcceptanceTestCase
 
         $commandTester->execute([
             'command'   => $command->getName(),
+        ]);
+    }
+
+    private function setProductStock(string $product, int $stock): void
+    {
+        $command = $this->application->find('machine:service:set-product-stock');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([
+            'command'   => $command->getName(),
+            'product'   => $product,
+            'stock'     => $stock,
         ]);
     }
 }

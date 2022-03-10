@@ -42,6 +42,11 @@ final class Product
         return ($this->stock()->value() > 0);
     }
 
+    public function setStock(ProductStock $stock): Product
+    {
+        return new self($this->name(), $this->price(), $stock);
+    }
+
     public function decreaseStock(): Product
     {
         $stock = new ProductStock($this->stock()->value() - 1);
