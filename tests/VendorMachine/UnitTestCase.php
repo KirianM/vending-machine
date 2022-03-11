@@ -2,15 +2,14 @@
 
 namespace VendorMachine\Tests;
 
-use Mockery;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Mockery\MockInterface;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use VendorMachine\App\Application;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-abstract class UnitTestCase extends MockeryTestCase
+abstract class UnitTestCase extends TestCase
 {
     public function setUp(): void
     {
@@ -25,8 +24,8 @@ abstract class UnitTestCase extends MockeryTestCase
         $this->application = $container->get(Application::class);
     }
 
-    protected function mock(string $className): MockInterface
+    protected function mock(string $className): MockObject
     {
-        return Mockery::mock($className);
+        return $this->getMockBuilder($className)->getMock();
     }
 }

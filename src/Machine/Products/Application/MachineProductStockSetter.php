@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace VendorMachine\Machine\Products\Application;
 
-use VendorMachine\Machine\Change\Domain\MachineChangeRepository;
 use VendorMachine\Machine\Products\Domain\MachineProductsRepository;
 use VendorMachine\Machine\Products\Domain\ProductName;
 use VendorMachine\Machine\Products\Domain\ProductStock;

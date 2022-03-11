@@ -1,22 +1,20 @@
 <?php
 
-namespace VendorMachine\Tests\Machine\Application;
+namespace VendorMachine\Tests\Machine\Balance\Application;
 
-use Symfony\Component\Console\Tester\CommandTester;
 use VendorMachine\Machine\Balance\Application\MachineCoinsInserter;
 use VendorMachine\Machine\Balance\Domain\MachineBalanceRepository;
 use VendorMachine\Shared\Domain\Coin;
 use VendorMachine\Tests\UnitTestCase;
-use Mockery\MockInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use VendorMachine\Machine\Balance\Domain\Balance;
 use VendorMachine\Machine\Balance\Domain\MachineBalanceGetter;
 use VendorMachine\Shared\Domain\Coins;
-use VendorMachine\Shared\Domain\DomainError;
 use VendorMachine\Shared\Domain\InvalidCoin;
 
 class MachineCoinsInserterTest extends UnitTestCase
 {
-    private MachineMachineBalanceRepositoryRepository|MockInterface|null $repository;
+    private MachineBalanceRepository|MockObject|null $repository;
     private MachineCoinsInserter $inserter;
 
     public function setUp(): void
@@ -27,19 +25,19 @@ class MachineCoinsInserterTest extends UnitTestCase
         $this->inserter = new MachineCoinsInserter($this->repository(), $coinsGetter);
     }
     /** @test */
-    // public function it_should_not_throw_exceptions(): void
-    // {
-    //     $coins = new Coins([
-    //         new Coin(0.05)
-    //     ]);
+    public function it_should_not_throw_exceptions(): void
+    {
+        $coins = new Coins([
+            new Coin(0.05)
+        ]);
 
-    //     $balance = new Balance($coins);
+        $balance = new Balance($coins);
 
-    //     $this->shouldGet(new Balance(new Coins([])));
-    //     $this->shouldSave($balance);
+        $this->shouldGet(new Balance(new Coins([])));
+        $this->shouldSave($balance);
 
-    //     $this->inserter->__invoke($coins);
-    // }
+        $this->inserter->__invoke($coins);
+    }
 
     /** @test */
     public function it_should_throw_an_exception_when_coin_amount_is_not_allowed(): void
@@ -54,21 +52,20 @@ class MachineCoinsInserterTest extends UnitTestCase
     protected function shouldGet(Balance $balance): void
     {
         $this->repository()
-            ->shouldReceive('get')
-            ->once()
-            ->andReturn($balance);
+            ->expects($this->once())
+            ->method('get')
+            ->willReturn($balance);
     }
 
     protected function shouldSave(Balance $balance): void
     {
         $this->repository()
-            ->shouldReceive('save')
-            ->with($balance)
-            ->once()
-            ->andReturnNull();
+            ->expects($this->once())
+            ->method('save')
+            ->with($balance);
     }
 
-    public function repository(): MachineBalanceRepository|MockInterface
+    public function repository(): MachineBalanceRepository|MockObject
     {
         return $this->repository = $this->repository ?? $this->mock(MachineBalanceRepository::class);
     }

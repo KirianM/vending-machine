@@ -22,13 +22,9 @@ final class Coins extends Collection
 
     public function toArray(): array
     {
-        $coins = array_map(function ($coin) {
+        return array_map(function ($coin) {
             return $coin->value();
         }, $this->items());
-
-        rsort($coins);
-
-        return $coins;
     }
 
     public function total(): float

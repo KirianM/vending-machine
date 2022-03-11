@@ -3,7 +3,6 @@
 namespace VendorMachine\App\Tests\Console;
 
 use VendorMachine\App\Tests\AcceptanceTestCase;
-use VendorMachine\Shared\Domain\Coins;
 
 class MachineBuyProductCommandTest extends AcceptanceTestCase
 {
