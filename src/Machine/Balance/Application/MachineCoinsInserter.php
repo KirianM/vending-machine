@@ -18,7 +18,7 @@ final class MachineCoinsInserter
     {
         $balance = $this->balanceGetter->__invoke();
 
-        $balance = $balance->insertCoins($coins);
+        $balance->insertCoins($coins);
 
         $this->repository->save($balance);
     }

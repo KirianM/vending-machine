@@ -39,18 +39,16 @@ final class Product
 
     public function isInStock(): bool
     {
-        return ($this->stock()->value() > 0);
+        return $this->stock()->greaterThan(0);
     }
 
-    public function setStock(ProductStock $stock): Product
+    public function changeStock(ProductStock $stock): void
     {
-        return new self($this->name(), $this->price(), $stock);
+        $this->stock = $stock;
     }
 
-    public function decreaseStock(): Product
+    public function decreaseStock(int $amount = 1): void
     {
-        $stock = new ProductStock($this->stock()->value() - 1);
-
-        return new self($this->name(), $this->price(), $stock);
+        $this->stock = $this->stock()->decrease($amount);
     }
 }

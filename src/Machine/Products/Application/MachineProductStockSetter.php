@@ -7,7 +7,6 @@ namespace VendorMachine\Machine\Products\Application;
 use VendorMachine\Machine\Products\Domain\MachineProductsRepository;
 use VendorMachine\Machine\Products\Domain\ProductName;
 use VendorMachine\Machine\Products\Domain\ProductStock;
-use VendorMachine\Shared\Domain\Coins;
 
 final class MachineProductStockSetter
 {
@@ -19,7 +18,7 @@ final class MachineProductStockSetter
     {
         $product = $this->repository->search($name);
 
-        $product = $product->setStock($stock);
+        $product->changeStock($stock);
 
         $this->repository->save($product);
     }

@@ -16,8 +16,8 @@ final class MachineChangeSetter
     {
         $change = $this->repository->get();
 
-        $change = $change->empty();
-        $change = $change->insertCoins($coins);
+        $change->empty();
+        $change->insertCoins($coins);
 
         $this->repository->save($change);
     }

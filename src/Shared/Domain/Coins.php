@@ -13,6 +13,11 @@ final class Coins extends Collection
         return Coin::class;
     }
 
+    public static function empty(): Coins
+    {
+        return new self([]);
+    }
+
     public static function fromArray(array $coins): Coins
     {
         return new self(array_map(function ($value) {
@@ -68,7 +73,7 @@ final class Coins extends Collection
         return self::fromArray($balance);
     }
 
-    public static function merge(Coins ...$coins)
+    public static function merge(Coins ...$coins): Coins
     {
         $availableCoins = [];
 

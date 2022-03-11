@@ -28,7 +28,7 @@ final class MachineBalanceSpend
             throw new NotEnoughMoney();
         }
 
-        $amountsDiff = FloatUtils::diff($balance->coins()->total(), $amount);
+        $amountsDiff = FloatUtils::diff($balance->total(), $amount);
 
         $changeBox = $this->changeBoxGetter->__invoke();
         $availableCoins = Coins::merge($balance->coins(), $changeBox->coins());
@@ -47,11 +47,12 @@ final class MachineBalanceSpend
             $this->changeBoxSetter->__invoke($changeWithoutChangeCoins);
         } else {
             // No change is needed
-            $change = Coins::fromArray([]);
+            $change = Coins::empty();
             $this->changeBoxSetter->__invoke($availableCoins);
         }
 
-        $balance = $balance->empty();
+        $balance->empty();
+        
         $this->repository->save($balance);
 
         return $change;

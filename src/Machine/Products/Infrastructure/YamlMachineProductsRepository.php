@@ -11,6 +11,8 @@ use VendorMachine\Shared\Infrastructure\YamlMachineRepository;
 
 final class YamlMachineProductsRepository extends YamlMachineRepository implements MachineProductsRepository
 {
+    private const PRODUCTS = 'products';
+
     protected function entityFilepath(): string
     {
         return 'machine/products.yaml';
@@ -18,11 +20,11 @@ final class YamlMachineProductsRepository extends YamlMachineRepository implemen
 
     protected function dummyEntity(): mixed
     {
-        return [
+        return [self::PRODUCTS => [
             ['name' => 'Water', 'price' => 0.65, 'stock' => 10],
             ['name' => 'Juice', 'price' => 1.00, 'stock' => 10],
             ['name' => 'Soda', 'price' => 1.5, 'stock' => 10],
-        ];
+        ]];
     }
 
     public function search(ProductName $name): ?Product
@@ -33,7 +35,7 @@ final class YamlMachineProductsRepository extends YamlMachineRepository implemen
             return null;
         }
 
-        $item = $this->entityState[$itemIndex];
+        $item = $this->entityState[self::PRODUCTS][$itemIndex];
         
         return Product::fromPrimitives($item['name'], $item['price'], $item['stock']);
     }
@@ -46,7 +48,7 @@ final class YamlMachineProductsRepository extends YamlMachineRepository implemen
             throw new \RuntimeException('Product not found');
         }
 
-        $this->entityState[$itemIndex] = [
+        $this->entityState[self::PRODUCTS][$itemIndex] = [
             'name'  => $item->name()->value(),
             'price' => $item->price()->value(),
             'stock' => $item->stock()->value(),
@@ -57,7 +59,7 @@ final class YamlMachineProductsRepository extends YamlMachineRepository implemen
 
     private function getProductIndex(string $name): ?int
     {
-        $itemIndex = array_search($name, array_column($this->entityState, 'name'));
+        $itemIndex = array_search($name, array_column($this->entityState[self::PRODUCTS], 'name'));
 
         if ($itemIndex === false) {
             return null;

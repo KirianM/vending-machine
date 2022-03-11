@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use VendorMachine\Machine\Products\Application\MachineProductBuyer;
 use VendorMachine\Machine\Balance\Domain\NotEnoughMoney;
+use VendorMachine\Machine\Products\Domain\NotEnoughChange;
 use VendorMachine\Machine\Products\Domain\OutOfStock;
 use VendorMachine\Machine\Products\Domain\ProductName;
 
@@ -42,6 +43,8 @@ class MachineBuyProductCommand extends Command
             $output->writeln(sprintf('Product <%s> is out of stock', $input->getArgument('name')));
         } catch (NotEnoughMoney $e) {
             $output->writeln(sprintf('Current balance is not enough to buy <%s>', $input->getArgument('name')));
+        } catch (NotEnoughChange $e) {
+            $output->writeln('There is not enough change');
         }
 
         return Command::SUCCESS;

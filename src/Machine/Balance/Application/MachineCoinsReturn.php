@@ -20,7 +20,7 @@ final class MachineCoinsReturn
 
         $coins = $balance->coins();
 
-        $balance = $balance->empty();
+        $balance->empty();
 
         $this->repository->save($balance);
 

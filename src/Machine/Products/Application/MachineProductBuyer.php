@@ -27,7 +27,7 @@ final class MachineProductBuyer
 
         $change = $this->balanceSpend->__invoke($product->price()->value());
 
-        $product = $product->decreaseStock();
+        $product->decreaseStock();
 
         $this->repository->save($product);
 

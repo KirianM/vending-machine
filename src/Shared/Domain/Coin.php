@@ -9,7 +9,6 @@ use VendorMachine\Shared\Domain\ValueObject\FloatValueObject;
 final class Coin extends FloatValueObject
 {
     private const ALLOWED_AMOUNTS = [0.05, 0.10, 0.25, 1];
-    private const EPSILON = 0.00001;
 
     public function __construct(protected float $value)
     {
@@ -26,7 +25,7 @@ final class Coin extends FloatValueObject
         $valid = false;
 
         foreach (self::allowedAmounts() as $allowedAmount) {
-            if (abs($allowedAmount - $value) < self::EPSILON) {
+            if (FloatUtils::areEqual($allowedAmount, $value)) {
                 $valid = true;
                 break;
             }

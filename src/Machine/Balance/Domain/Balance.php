@@ -18,30 +18,23 @@ final class Balance
         return $this->coins;
     }
 
-    public function empty(): Balance
+    public function total(): float
     {
-        return new self(new Coins([]));
+        return $this->coins()->total();
     }
 
-    public function removeCoins(Coins $coins): Balance
+    public function empty(): void
     {
-        return new self(Coins::removeCoinsFromCollection($this->coins(), $coins));
+        $this->coins = Coins::empty();
     }
 
-    public function insertCoins(Coins $coins): Balance
+    public function insertCoins(Coins $coins): void
     {
-        return new self(
-            Coins::fromArray(array_merge($this->coins()->toArray(), $coins->toArray()))
-        );
-    }
-
-    public function coinsFor(float $amount): Coins
-    {
-        return Coins::extractCoinsForAmount($this->coins(), $amount);
+        $this->coins = Coins::merge($this->coins(), $coins);
     }
 
     public function isEnough(float $quantity): bool
     {
-        return ( FloatUtils::isBiggerThan($this->coins()->total(), $quantity) || FloatUtils::areEqual($this->coins()->total(), $quantity));
+        return ( FloatUtils::isBiggerThan($this->total(), $quantity) || FloatUtils::areEqual($this->total(), $quantity));
     }
 }

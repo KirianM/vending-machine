@@ -17,20 +17,23 @@ final class Change
         return $this->coins;
     }
 
-    public function empty(): Change
+    public function total(): float
     {
-        return new self(new Coins([]));
+        return $this->coins()->total();
     }
 
-    public function insertCoins(Coins $coins): Change
+    public function empty(): void
     {
-        return new self(
-            Coins::fromArray(array_merge($this->coins()->toArray(), $coins->toArray()))
-        );
+        $this->coins = Coins::empty();
+    }
+
+    public function insertCoins(Coins $coins): void
+    {
+        $this->coins = Coins::merge($this->coins(), $coins);
     }
 
     public function isEnough(float $quantity): bool
     {
-        return ($this->coins()->total() - $quantity > 0);
+        return ($this->total() - $quantity > 0);
     }
 }
