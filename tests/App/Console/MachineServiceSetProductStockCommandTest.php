@@ -3,17 +3,18 @@
 namespace VendorMachine\App\Tests\Console;
 
 use VendorMachine\App\Tests\AcceptanceTestCase;
-use Symfony\Component\Console\Tester\CommandTester;
 
 class MachineServiceSetProductStockCommandTest extends AcceptanceTestCase
 {
+    private const COMMAND_NAME = 'service:products:set-stock';
+
     /** @test */
     public function it_should_return_command_success(): void
     {
-        $command = $this->application->find('service:products:set-stock');
-        $commandTester = new CommandTester($command);
+        $commandTester = $this->getCommandTester(self::COMMAND_NAME);
+
         $commandTester->execute([
-            'command'   => $command->getName(),
+            'command'   => self::COMMAND_NAME,
             'product'   => 'Water',
             'stock'     => 10,
         ]);

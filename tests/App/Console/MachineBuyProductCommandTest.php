@@ -3,13 +3,11 @@
 namespace VendorMachine\App\Tests\Console;
 
 use VendorMachine\App\Tests\AcceptanceTestCase;
-use Symfony\Component\Console\Tester\CommandTester;
-use VendorMachine\Machine\Balance\Domain\MachineBalanceRepository;
 use VendorMachine\Shared\Domain\Coins;
 
 class MachineBuyProductCommandTest extends AcceptanceTestCase
 {
-    private const COMMAND_NAME = 'machine:coins:insert';
+    private const COMMAND_NAME = 'machine:products:buy';
 
     /** @test */
     public function it_should_output_the_name_of_the_product_selected(): void
@@ -18,8 +16,7 @@ class MachineBuyProductCommandTest extends AcceptanceTestCase
         $this->emptyBalance();
         $this->insertCoins($this->getEnoughCoinsToBuyWater());
 
-        $command = $this->application->find('machine:products:buy');
-        $commandTester = new CommandTester($command);
+        $commandTester = $this->getCommandTester(self::COMMAND_NAME);
         $commandTester->execute([
             'command'   => self::COMMAND_NAME,
             'name'      => 'Water',
@@ -38,7 +35,7 @@ class MachineBuyProductCommandTest extends AcceptanceTestCase
         $this->emptyBalance();
         $this->insertCoins($this->getEnoughCoinsToBuyWater());
 
-        $commandTester = $this->getCommandTester();
+        $commandTester = $this->getCommandTester(self::COMMAND_NAME);
         $commandTester->execute([
             'command'   => self::COMMAND_NAME,
             'name'      => 'Water',
@@ -57,7 +54,7 @@ class MachineBuyProductCommandTest extends AcceptanceTestCase
         $this->emptyBalance();
         $this->insertCoins($this->getNotEnoughCoinsToBuyWater());
 
-        $commandTester = $this->getCommandTester();
+        $commandTester = $this->getCommandTester(self::COMMAND_NAME);
         $commandTester->execute([
             'command'   => self::COMMAND_NAME,
             'name'      => 'Water',
@@ -84,7 +81,7 @@ class MachineBuyProductCommandTest extends AcceptanceTestCase
             0.05,
         ]);
 
-        $commandTester = $this->getCommandTester();
+        $commandTester = $this->getCommandTester(self::COMMAND_NAME);
         $commandTester->execute([
             'command'   => self::COMMAND_NAME,
             'name'      => 'Water',
@@ -111,54 +108,5 @@ class MachineBuyProductCommandTest extends AcceptanceTestCase
         return [
             0.25,
         ];
-    }
-
-    private function insertCoins(array $coins): void
-    {
-        $command = $this->application->find(self::COMMAND_NAME);
-        $commandTester = new CommandTester($command);
-
-        $commandTester->execute([
-            'command'   => $command->getName(),
-            'coins'     => $coins,
-        ]);
-    }
-
-    private function getCommandTester(): CommandTester
-    {
-        $command = $this->application->find('machine:products:buy');
-
-        return new CommandTester($command);
-    }
-
-    private function emptyBalance(): void
-    {
-        $command = $this->application->find('machine:coins:return');
-        $commandTester = new CommandTester($command);
-
-        $commandTester->execute([
-            'command'   => $command->getName(),
-        ]);
-    }
-
-    private function setProductStock(string $product, int $stock): void
-    {
-        $command = $this->application->find('service:products:set-stock');
-        $commandTester = new CommandTester($command);
-        $commandTester->execute([
-            'command'   => $command->getName(),
-            'product'   => $product,
-            'stock'     => $stock,
-        ]);
-    }
-
-    private function setChange(array $coins): void
-    {
-        $command = $this->application->find('service:change:set');
-        $commandTester = new CommandTester($command);
-        $commandTester->execute([
-            'command'   => $command->getName(),
-            'coins'     => $coins,
-        ]);
     }
 }
