@@ -9,6 +9,7 @@ use VendorMachine\Machine\Change\Domain\MachineChangeSetter;
 use VendorMachine\Machine\Products\Domain\NotEnoughChange;
 use VendorMachine\Shared\Domain\Coins;
 use VendorMachine\Shared\Domain\FloatUtils;
+use VendorMachine\Shared\Domain\NotEnoughCoins;
 
 final class MachineBalanceSpend
 {
@@ -24,37 +25,44 @@ final class MachineBalanceSpend
     {
         $balance = $this->balanceGetter->__invoke();
 
-        if (!$balance->isEnough($amount)) {
-            throw new NotEnoughMoney();
-        }
+        $this->guardNotEnoughMoney($balance, $amount);
 
-        $amountsDiff = FloatUtils::diff($balance->total(), $amount);
+        $changeAmount = FloatUtils::diff($balance->total(), $amount);
+
+        // Exact change
+        if (FloatUtils::isZero($changeAmount)) {
+            $balance->empty();
+            $this->repository->save($balance);
+
+            return Coins::empty();
+        }
 
         $changeBox = $this->changeBoxGetter->__invoke();
+
         $availableCoins = Coins::merge($balance->coins(), $changeBox->coins());
 
-        if (!FloatUtils::isZero($amountsDiff)) {
-            // Collection of coins to return
-            $change = Coins::extractCoinsForAmount($availableCoins, $amountsDiff);
-
-            if (!FloatUtils::areEqual($change->total(), $amountsDiff)) {
-                throw new NotEnoughChange();
-            }
-
-            // Final Collection of coins after return the change
-            $changeWithoutChangeCoins = Coins::removeCoinsFromCollection($availableCoins, $change);
-
-            $this->changeBoxSetter->__invoke($changeWithoutChangeCoins);
-        } else {
-            // No change is needed
-            $change = Coins::empty();
-            $this->changeBoxSetter->__invoke($availableCoins);
+        try {
+            // Coins to return
+            $change = $availableCoins->getCoinsToSumAmount($changeAmount);
+        } catch (NotEnoughCoins $e) {
+            throw new NotEnoughChange();
         }
 
+        // Remaining Coins after calculating the change
+        $changeBoxWithoutChangeCoins = Coins::createFromCoinsWithoutThoseCoins($availableCoins, $change);
+
+        $this->changeBoxSetter->__invoke($changeBoxWithoutChangeCoins);
+
         $balance->empty();
-        
         $this->repository->save($balance);
 
         return $change;
+    }
+
+    private function guardNotEnoughMoney(Balance $balance, float $cost): void
+    {
+        if (!$balance->isEnough($cost)) {
+            throw new NotEnoughMoney();
+        }
     }
 }

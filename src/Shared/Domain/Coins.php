@@ -39,27 +39,33 @@ final class Coins extends Collection
         }, $this->items()));
     }
 
-    public static function extractCoinsForAmount(Coins $availableCoins, float $amount): Coins
+    public function getCoinsToSumAmount(float $amount): Coins
     {
-        $coins = $availableCoins->toArray();
+        $coins = $this->toArray();
         rsort($coins);
 
-        $neededCoins = [];
+        $neededCoinsArray = [];
 
         $remainingAmount = $amount;
 
         foreach ($coins as $coin) {
             if (FloatUtils::isBiggerThan($remainingAmount, $coin) || FloatUtils::areEqual($remainingAmount, $coin)) {
-                $neededCoins[] = $coin;
+                $neededCoinsArray[] = $coin;
 
                 $remainingAmount -= $coin;
             }
         }
+        
+        $neededCoins = self::fromArray($neededCoinsArray);
 
-        return self::fromArray($neededCoins);
+        if (!FloatUtils::areEqual($neededCoins->total(), $amount)) {
+            throw new NotEnoughCoins();
+        }
+
+        return $neededCoins;
     }
 
-    public static function removeCoinsFromCollection(Coins $collection, Coins $coins)
+    public static function createFromCoinsWithoutThoseCoins(Coins $collection, Coins $coins)
     {
         $balance = $collection->toArray();
         rsort($balance);
