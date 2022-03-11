@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorMachine\App\Console\Balance;
+namespace VendorMachine\App\Console\Change;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
