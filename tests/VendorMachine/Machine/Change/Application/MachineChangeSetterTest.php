@@ -32,18 +32,9 @@ class MachineChangeSetterTest extends UnitTestCase
 
         $change = new Change($coins);
 
-        $this->shouldGet($change);
         $this->shouldSave($change);
 
         $this->changeSetter->__invoke($change->coins());
-    }
-
-    protected function shouldGet(Change $change): void
-    {
-        $this->repository()
-            ->expects($this->once())
-            ->method('get')
-            ->willReturn($change);
     }
 
     protected function shouldSave(Change $change): void

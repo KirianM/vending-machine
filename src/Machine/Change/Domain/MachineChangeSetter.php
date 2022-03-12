@@ -14,10 +14,7 @@ final class MachineChangeSetter
 
     public function __invoke(Coins $coins): void
     {
-        $change = $this->repository->get();
-
-        $change->empty();
-        $change->insertCoins($coins);
+        $change = new Change($coins);
 
         $this->repository->save($change);
     }
