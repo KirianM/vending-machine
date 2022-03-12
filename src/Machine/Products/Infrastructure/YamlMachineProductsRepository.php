@@ -7,6 +7,7 @@ namespace VendorMachine\Machine\Products\Infrastructure;
 use VendorMachine\Machine\Products\Domain\Product;
 use VendorMachine\Machine\Products\Domain\ProductName;
 use VendorMachine\Machine\Products\Domain\MachineProductsRepository;
+use VendorMachine\Machine\Products\Domain\Products;
 use VendorMachine\Shared\Infrastructure\YamlMachineRepository;
 
 final class YamlMachineProductsRepository extends YamlMachineRepository implements MachineProductsRepository
@@ -38,6 +39,13 @@ final class YamlMachineProductsRepository extends YamlMachineRepository implemen
         $item = $this->entityState[self::PRODUCTS][$itemIndex];
         
         return Product::fromPrimitives($item['name'], $item['price'], $item['stock']);
+    }
+
+    public function all(): Products
+    {
+        return new Products(array_map(function ($product) {
+            return Product::fromPrimitives($product['name'], $product['price'], $product['stock']);
+        }, $this->entityState[self::PRODUCTS]));
     }
 
     public function save(Product $item): void
