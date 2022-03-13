@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    VendorMachine\Tests\:
+        resource: '../../tests/VendorMachine/*'
+
+    VendorMachine\App\Tests\:
+        resource: '../../tests/App/*'

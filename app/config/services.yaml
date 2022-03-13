@@ -1,0 +1,25 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    _instanceof:
+        Symfony\Component\Console\Command\Command:
+            tags: [ 'console.command' ]
+    
+    VendorMachine\:
+        resource: '../../src/*'
+        exclude: '../../src/{DependencyInjection,Entity,Tests,Kernel.php}'
+
+    VendorMachine\App\:
+        resource: '../*'
+        exclude: '../{DependencyInjection,Entity,Tests,Kernel.php}'
+
+    VendorMachine\App\Application:
+        public: true
+        arguments:
+          - !tagged_iterator console.command
+
+    VendorMachine\Machine\Balance\Domain\MachineBalanceRepository: '@VendorMachine\Machine\Balance\Infrastructure\YamlMachineBalanceRepository'
+    VendorMachine\Machine\Products\Domain\MachineProductsRepository: '@VendorMachine\Machine\Products\Infrastructure\YamlMachineProductsRepository'
+    VendorMachine\Machine\Change\Domain\MachineChangeRepository: '@VendorMachine\Machine\Change\Infrastructure\YamlMachineChangeRepository'
